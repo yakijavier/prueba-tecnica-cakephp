@@ -119,17 +119,18 @@ class UsersController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['delete']);
         $currentUserId = $this->request->getSession()->read('Auth.User.id');
 
         $currentUser = $this->Users->get($currentUserId, [
             'contain' => ['Profiles']
         ]);
 
-        if ($currentUser->profile->role !== 'admin') {
+        if (!$currentUser->profile || $currentUser->profile->role !== 'admin') {
             $this->Flash->error('You are not authorized to delete users.');
             return $this->redirect(['action' => 'index']);
         }
+
+        $this->request->allowMethod(['delete']);
 
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
