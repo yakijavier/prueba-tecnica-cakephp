@@ -21,7 +21,6 @@ use Cake\Core\ContainerInterface;
 use Cake\Datasource\FactoryLocator;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
-use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
@@ -34,7 +33,7 @@ use Authentication\AuthenticationService;
 use Cake\Routing\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use App\Middleware\ApiErrorMiddleware;
-
+use App\Middleware\FriendlyBodyParserMiddleware;
 
 /**
  * Application setup class.
@@ -92,7 +91,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 'cacheTime' => Configure::read('Asset.cacheTime'),
             ]))
             ->add(new RoutingMiddleware($this))
-            ->add(new BodyParserMiddleware())
+            ->add(new FriendlyBodyParserMiddleware())
             ->add($csrf)
             ->add(new AuthenticationMiddleware($this));
 
