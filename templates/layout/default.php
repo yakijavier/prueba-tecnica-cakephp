@@ -2,7 +2,7 @@
 /**
  * @var \App\View\AppView $this
  */
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'Prueba Tecnica CakePHP';
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,7 +28,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <h1 class="navbar-brand">Mi App</h1>
+            <h1 class="navbar-brand">Prueba Tecnica</h1>
             <div class="collapse navbar-collapse" id="sidebar-menu">
                 <ul class="navbar-nav pt-3">
                     <li class="nav-item">
