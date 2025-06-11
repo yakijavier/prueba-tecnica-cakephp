@@ -1,53 +1,175 @@
-# CakePHP Application Skeleton
+# Prueba Técnica - CakePHP
 
-![Build Status](https://github.com/cakephp/app/actions/workflows/ci.yml/badge.svg?branch=5.x)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
-[![PHPStan](https://img.shields.io/badge/PHPStan-level%208-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+Este proyecto es una aplicación de gestión de usuarios desarrollada en **CakePHP 5.x** con **PHP 8.2.x**. Incluye autenticación, autorización basada en roles (admin/user), API RESTful y una interfaz web estilizada con **Tabler**.
 
-A skeleton for creating applications with [CakePHP](https://cakephp.org) 5.x.
+---
 
-The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
+## Estructura del Proyecto
 
-## Installation
+prueba-tecnica-cakephp/
+├── src/
+│ ├── Controller/ # Controladores principales
+│ ├── Model/ # Entidades y tablas
+│ ├── Middleware/ # Middlewares personalizados
+│ └── Application.php # Configuración de la app
+├── config/
+│ ├── app.php # Configuración general
+│ └── routes.php # Rutas web y API
+├── templates/
+│ ├── Profiles/ # Vistas específicas de perfiles
+│ └── Users/ # Vistas específicas de usuarios (incluido el login)
+├── webroot/
+│ ├── css/tabler.min.css # CSS de Tabler
+│ └── js/tabler.min.js # JS de Tabler
 
-1. Download [Composer](https://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
-2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
+---
 
-If Composer is installed globally, run
+## Decisiones Técnicas
 
-```bash
-composer create-project --prefer-dist cakephp/app
-```
+- **Framework**: CakePHP 5.x
+- **Base de datos**: MySQL
+- **ORM**: Uso del ORM de CakePHP para seguridad y facilidad.
+- **Autenticación**: Plugin `cakephp/authentication`.
+- **Autorización**: Control manual basado en el rol (`Profiles.role`) del usuario.
+- **Estilo**: Tabler UI integrado desde archivos compilados.
+- **API REST**: Rutas con prefijo `/api`, incluye login y CRUD con control de acceso.
+- **Middleware personalizado**:
+  - `FriendlyBodyParserMiddleware`: para mostrar errores más claros en la API.
+  - `ApiErrorMiddleware`: para interceptar errores comunes en endpoints API.
+- **Errores amigables en la web**: Se personalizó `error400.php`, `error500.php` y otros templates para UX más amigable.
+- **Producción vs Desarrollo**: El entorno se controla vía `.env` o directamente en `config/app.php`.
 
-In case you want to use a custom app dir name (e.g. `/myapp/`):
+---
 
-```bash
-composer create-project --prefer-dist cakephp/app myapp
-```
+## Estructura de la Base de Datos
 
-You can now either use your machine's webserver to view the default home page, or start
-up the built-in webserver with:
+### Tabla: `users`
 
-```bash
-bin/cake server -p 8765
-```
+| Campo       | Tipo       | Descripción                      |
+|-------------|------------|----------------------------------|
+| id          | int (PK)   | ID del usuario                   |
+| email       | varchar    | Email único                      |
+| password    | varchar    | Contraseña (hasheada)            |
+| name        | varchar    | Nombre del usuario               |
+| phone       | varchar    | Teléfono de contacto             |
+| profile_id  | int (FK)   | Relación con `profiles.id`       |
 
-Then visit `http://localhost:8765` to see the welcome page.
+### Tabla: `profiles`
 
-## Update
+| Campo     | Tipo       | Descripción                        |
+|-----------|------------|------------------------------------|
+| id        | int (PK)   | ID del perfil                      |
+| role      | varchar    | Rol del usuario                    |
 
-Since this skeleton is a starting point for your application and various files
-would have been modified as per your needs, there isn't a way to provide
-automated upgrades, so you have to do any updates manually.
 
-## Configuration
+---
 
-Read and edit the environment specific `config/app_local.php` and set up the
-`'Datasources'` and any other configuration relevant for your application.
-Other environment agnostic settings can be changed in `config/app.php`.
+## Cómo ejecutar el proyecto
 
-## Layout
+## Requisitos
 
-The app skeleton uses [Milligram](https://milligram.io/) (v1.3) minimalist CSS
-framework by default. You can, however, replace it with any other library or
-custom styles.
+- **XAMPP** (incluye PHP, Apache y MySQL)
+- **Composer** (para gestionar dependencias de PHP)
+- Navegador web
+- **Postman** o **Insomnia** (para probar la API)
+
+
+### Pasos
+
+1. **Clonar el proyecto**
+
+git clone https://github.com/yakijavier/prueba-tecnica-cakephp.git
+cd prueba-tecnica-cakephp
+
+2. **Instalar dependencias con Composer**
+
+composer install
+
+3. **Crear base de datos y las tablas**
+
+CREATE DATABASE prueba_tecnica DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+USE prueba_tecnica;
+
+CREATE TABLE profiles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    role VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(100),
+    phone VARCHAR(20),
+    profile_id INT,
+    FOREIGN KEY (profile_id) REFERENCES profiles(id)
+);
+
+
+4. **Agregar datos de prueba**
+
+INSERT INTO profiles (role) VALUES ('admin'), ('user');
+
+INSERT INTO users (email, password, name, phone, profile_id)
+VALUES ('admin@example.com', '$2y$10$Yvg89kJVWgVUP5YlFY/EeOFvjoveJL1.u.WMK3xtHYQZPCRAqSlKe', 'Admin User', '123456789', 1);
+
+5. **Configurar conexión**
+
+En config/app_local.php:
+
+'debug' => false,
+
+'Datasources' => [
+    'default' => [
+        'host' => 'localhost',
+        'username' => 'root',
+        'password' => '',
+        'database' => 'prueba_tecnica',
+        'driver' => \Cake\Database\Driver\Mysql::class,
+        'encoding' => 'utf8mb4',
+        'timezone' => 'UTC',
+    ],
+],
+
+6. **Levantar el servidor**
+
+bin/cake server
+
+Accedé a: http://localhost:8765
+
+## Acceso
+
+Email: admin@example.com
+
+Password: admin
+
+## API
+
+### Obtener usuarios
+
+curl -X GET http://localhost:8765/api/users \
+  -u admin@example.com:admin \
+  -H "Accept: application/json"
+
+### Modificar usuarios
+
+curl -X PUT http://localhost:8765/api/users/ID_DEL_USUARIO \
+  -u admin@example.com:admin \
+  -H "Accept: application/json"
+
+Formato del body
+
+{
+	"email": "admin@example.com",
+	"password": "admin",
+	"name": "Admin User",
+	"phone": "123456781",
+	"profile_id": 1
+}
+
+### Eliminar usuarios
+
+curl -X DELETE http://localhost:8765/api/users/ID_DEL_USUARIO \
+  -u admin@example.com:admin \
+  -H "Accept: application/json"
