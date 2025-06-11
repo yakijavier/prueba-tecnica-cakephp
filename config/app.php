@@ -15,8 +15,10 @@ return [
      *
      * Development Mode:
      * true: Errors and warnings shown.
+     *
+     * 'debug' => filter_var(env('DEBUG', false), FILTER_VALIDATE_BOOLEAN),
      */
-    'debug' => filter_var(env('DEBUG', false), FILTER_VALIDATE_BOOLEAN),
+    'debug' => false,
 
     /*
      * Configure basic information about the application.
@@ -437,7 +439,7 @@ return [
      *     Default is 5. WARNING: Increasing the max depth level can lead to an out of memory error.
      */
     'DebugKit' => [
-        'forceEnable' => filter_var(env('DEBUG_KIT_FORCE_ENABLE', false), FILTER_VALIDATE_BOOLEAN),
+        'forceEnable' => false,
         'safeTld' => env('DEBUG_KIT_SAFE_TLD', null),
         'ignoreAuthorization' => env('DEBUG_KIT_IGNORE_AUTHORIZATION', false),
     ],
