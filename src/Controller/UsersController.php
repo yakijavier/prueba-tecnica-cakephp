@@ -130,7 +130,7 @@ class UsersController extends AppController
             return $this->redirect(['action' => 'index']);
         }
 
-        $this->request->allowMethod(['delete']);
+        $this->request->allowMethod(['post','delete']);
 
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
