@@ -27,18 +27,16 @@ prueba-tecnica-cakephp/
 
 ## Decisiones Técnicas
 
-- **Framework**: CakePHP 5.x
+- **Framework**: CakePHP 5.x con PHP 8.2
 - **Base de datos**: MySQL
-- **ORM**: Uso del ORM de CakePHP para seguridad y facilidad.
+- **ORM**: Uso del ORM de CakePHP.
 - **Autenticación**: Plugin `cakephp/authentication`.
-- **Autorización**: Control manual basado en el rol (`Profiles.role`) del usuario.
+- **Autorización**: Control de borrado de usuarios basado en el rol.
 - **Estilo**: Tabler UI integrado desde archivos compilados.
-- **API REST**: Rutas con prefijo `/api`, incluye login y CRUD con control de acceso.
+- **API REST**: Rutas con prefijo `/api`.
 - **Middleware personalizado**:
   - `FriendlyBodyParserMiddleware`: para mostrar errores más claros en la API.
   - `ApiErrorMiddleware`: para interceptar errores comunes en endpoints API.
-- **Errores amigables en la web**: Se personalizó `error400.php`, `error500.php` y otros templates para UX más amigable.
-- **Producción vs Desarrollo**: El entorno se controla vía `.env` o directamente en `config/app.php`.
 
 ---
 
