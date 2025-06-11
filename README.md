@@ -61,7 +61,6 @@ prueba-tecnica-cakephp/
 | id        | int (PK)   | ID del perfil                      |
 | role      | varchar    | Rol del usuario                    |
 
-
 ---
 
 ## Cómo ejecutar el proyecto
@@ -73,20 +72,24 @@ prueba-tecnica-cakephp/
 - Navegador web
 - **Postman** o **Insomnia** (para probar la API)
 
-
 ### Pasos
 
 1. **Clonar el proyecto**
 
+```
 git clone https://github.com/yakijavier/prueba-tecnica-cakephp.git
 cd prueba-tecnica-cakephp
+```
 
 2. **Instalar dependencias con Composer**
 
+```
 composer install
+```
 
 3. **Crear base de datos y las tablas**
 
+```sql
 CREATE DATABASE prueba_tecnica DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
 USE prueba_tecnica;
@@ -105,19 +108,22 @@ CREATE TABLE users (
     profile_id INT,
     FOREIGN KEY (profile_id) REFERENCES profiles(id)
 );
-
+```
 
 4. **Agregar datos de prueba**
 
+```sql
 INSERT INTO profiles (role) VALUES ('admin'), ('user');
 
 INSERT INTO users (email, password, name, phone, profile_id)
 VALUES ('admin@example.com', '$2y$10$Yvg89kJVWgVUP5YlFY/EeOFvjoveJL1.u.WMK3xtHYQZPCRAqSlKe', 'Admin User', '123456789', 1);
+```
 
 5. **Configurar conexión**
 
-En config/app_local.php:
+En `config/app_local.php`:
 
+```php
 'debug' => false,
 
 'Datasources' => [
@@ -131,45 +137,55 @@ En config/app_local.php:
         'timezone' => 'UTC',
     ],
 ],
+```
 
 6. **Levantar el servidor**
 
+```
 bin/cake server
+```
 
 Accedé a: http://localhost:8765
 
 ## Acceso
 
 Email: admin@example.com
-
 Password: admin
 
 ## API
 
 ### Obtener usuarios
 
+```bash
 curl -X GET http://localhost:8765/api/users \
   -u admin@example.com:admin \
   -H "Accept: application/json"
+```
 
 ### Modificar usuarios
 
+```bash
 curl -X PUT http://localhost:8765/api/users/ID_DEL_USUARIO \
   -u admin@example.com:admin \
   -H "Accept: application/json"
+```
 
-Formato del body
+Formato del body:
 
+```json
 {
-	"email": "admin@example.com",
-	"password": "admin",
-	"name": "Admin User",
-	"phone": "123456781",
-	"profile_id": 1
+  "email": "admin@example.com",
+  "password": "admin",
+  "name": "Admin User",
+  "phone": "123456781",
+  "profile_id": 1
 }
+```
 
 ### Eliminar usuarios
 
+```bash
 curl -X DELETE http://localhost:8765/api/users/ID_DEL_USUARIO \
   -u admin@example.com:admin \
   -H "Accept: application/json"
+```
