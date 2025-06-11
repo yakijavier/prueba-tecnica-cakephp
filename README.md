@@ -6,6 +6,7 @@ Este proyecto es una aplicación de gestión de usuarios desarrollada en **CakeP
 
 ## Estructura del Proyecto
 
+```text
 prueba-tecnica-cakephp/
 ├── src/
 │ ├── Controller/ # Controladores principales
@@ -21,7 +22,7 @@ prueba-tecnica-cakephp/
 ├── webroot/
 │ ├── css/tabler.min.css # CSS de Tabler
 │ └── js/tabler.min.js # JS de Tabler
-
+```
 ---
 
 ## Decisiones Técnicas
