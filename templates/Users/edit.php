@@ -29,7 +29,12 @@
                     <?= $this->Form->control('email', ['class' => 'form-control']) ?>
                 </div>
                 <div class="col-md-6">
-                    <?= $this->Form->control('password', ['class' => 'form-control']) ?>
+                    <?= $this->Form->control('password', [
+                        'value' => '',
+                        'autocomplete' => 'new-password',
+                        'class' => 'form-control',
+                        'required' => false,
+                    ]) ?>
                 </div>
                 <div class="col-md-6">
                     <?= $this->Form->control('name', ['class' => 'form-control']) ?>
