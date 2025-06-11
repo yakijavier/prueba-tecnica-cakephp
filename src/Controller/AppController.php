@@ -37,11 +37,27 @@ class AppController extends Controller
      *
      * @return void
      */
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        $request = $this->getRequest();
+        $path = $request->getPath();
+
+        if (strpos($path, '/api/') === 0) {
+            $this->Authentication->allowUnauthenticated(['index', 'view', 'add', 'edit', 'delete']);
+        } else {
+            $this->Authentication->addUnauthenticatedActions(['login']);
+        }
+    }
+
+
     public function initialize(): void
     {
         parent::initialize();
 
         $this->loadComponent('Flash');
+        $this->loadComponent('Authentication.Authentication');
 
         /*
          * Enable the following component for recommended CakePHP form protection settings.

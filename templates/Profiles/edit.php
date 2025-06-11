@@ -4,29 +4,36 @@
  * @var \App\Model\Entity\Profile $profile
  */
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $profile->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $profile->id), 'class' => 'side-nav-item']
+<div class="page-body">
+    <div class="container-xl">
+
+        <!-- Acciones -->
+        <div class="d-flex justify-content-between mb-3">
+            <?= $this->Html->link(
+                '← ' . __('Back to list'),
+                ['action' => 'index'],
+                ['class' => 'btn btn-outline-secondary']
             ) ?>
-            <?= $this->Html->link(__('List Profiles'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
-    </aside>
-    <div class="column column-80">
-        <div class="profiles form content">
-            <?= $this->Form->create($profile) ?>
-            <fieldset>
-                <legend><?= __('Edit Profile') ?></legend>
-                <?php
-                    echo $this->Form->control('role');
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
+
+        <!-- Formulario en tarjeta -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><?= __('Edit Profile') ?></h3>
+            </div>
+            <div class="card-body">
+                <?= $this->Form->create($profile, ['class' => 'row g-3']) ?>
+
+                <div class="col-md-6">
+                    <?= $this->Form->control('role', ['class' => 'form-control']) ?>
+                </div>
+
+                <div class="col-12 mt-3">
+                    <?= $this->Form->button(__('Submit'), ['class' => 'btn btn-primary']) ?>
+                </div>
+
+                <?= $this->Form->end() ?>
+            </div>
         </div>
     </div>
 </div>
